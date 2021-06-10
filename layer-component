@@ -1,0 +1,250 @@
+<div style="overflow-y: auto;">
+      <div class="example-box">
+        <input type="checkbox" checked [checked]="news_feed1" (change)="newsFeed1($event)" />
+        <label style="text-align: left;margin-left: 5px;">Current Vehicle Downtime</label><br>
+        <div *ngIf="news_feed1" style="overflow-x:auto;">
+          <table class="table table-striped table-bordered table-hover table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Vehicle ID</th>
+                <th scope="col">Vehicle Type</th>
+                <th scope="col">Location</th>
+                <th scope="col">No of hours</th>
+                <th scope="col">$ amount impacted</th>
+                <th scope="col">Contract Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-info">
+                <td>C005A7</td>
+                <td>Excavator</td>
+                <td>Wellington</td>
+                <td>5</td>
+                <td>1250</td>
+                <td>7500</td>
+              </tr>
+              <tr class="table-info">
+                <td>A015G7</td>
+                <td>Bulldozer</td>
+                <td>Ogden</td>
+                <td>10</td>
+                <td>8000</td>
+                <td>10000</td>
+              </tr>
+              <tr class="table-info">
+                <td>D345PT</td>
+                <td>Loader</td>
+                <td>Springville</td>
+                <td>4</td>
+                <td>3000</td>
+                <td>11000</td>
+              </tr>
+              <tr class="table-info">
+                <td>P40T4F</td>
+                <td>Grader</td>
+                <td>Scofield</td>
+                <td>7</td>
+                <td>450</td>
+                <td>6000</td>
+              </tr>
+              <tr class="table-info">
+                <td>Z007D4</td>
+                <td>Loader</td>
+                <td>Wales</td>
+                <td>1</td>
+                <td>1500</td>
+                <td>6500</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+        <mat-list style="width: 100% !important">
+          <mat-list-item style="cursor: pointer;">
+            <mat-checkbox color="primary" [checked]="layer.show" matListAvatar (change)="showOrHideLayer(layer)"></mat-checkbox>
+            <h3 matLine> {{layer.name}} </h3>
+            <button mat-icon-button [matMenuTriggerFor]="layer.name && layer.name.includes('Heat Map') ? heatMapMenu : defaultMenu" aria-label="actions" title="actions" [disabled]="!layer.show">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #defaultMenu="matMenu" xPosition="before">
+              <button mat-menu-item [matMenuTriggerFor]="defaultSlider">
+                <mat-icon class="iconSize">opacity</mat-icon>
+                <span>Transparency</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button mat-menu-item (click)="zoomToLayerExtent(layer)">
+                <mat-icon class="iconSize">zoom_in</mat-icon>
+                <span>Zoom to</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button mat-menu-item *ngIf="layer.name.includes('Query Results')" (click)="removelayer(layer)">
+                <mat-icon class="iconSize">layers_clear</mat-icon>
+                <span>Remove Layer</span>
+              </button>
+              <mat-divider *ngIf="layer.name.includes('Query Results')"></mat-divider>
+              <button mat-menu-item (click)="enableOrDisablePopup(layer)">
+                <mat-icon class="iconSize">launch</mat-icon>
+                <span *ngIf="layer.popup">Disable Pop-up</span>
+                <span *ngIf="!layer.popup">Enable Pop-up</span>
+              </button>
+            </mat-menu>
+            <mat-menu #defaultSlider="matMenu" direction="down" yPosition="below">
+              <mat-slider max="1" min="0" step="0.1" color="primary" thumbLabel="true"
+                [(ngModel)]="layer.opacity" style="width: -webkit-fill-available;"
+                (click)="$event.stopPropagation();" (change)="onTransparencyChange($event, layer)">
+              </mat-slider>
+            </mat-menu>
+            <mat-menu #heatMapMenu="matMenu" xPosition="before">
+              <button mat-menu-item [matMenuTriggerFor]="opacitySlider" [matMenuTriggerData]="{name: 'transparency'}">
+                <mat-icon class="iconSize">opacity</mat-icon>
+                <span>Transparency</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button mat-menu-item [matMenuTriggerFor]="intensitySlider" [matMenuTriggerData]="{name: 'intensity'}">
+                <mat-icon class="iconSize">brightness_medium</mat-icon>
+                <span>Intensity</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button mat-menu-item [matMenuTriggerFor]="radiusSlider" [matMenuTriggerData]="{name: 'radius'}">
+                <mat-icon class="iconSize">all_out</mat-icon>
+                <span>Radius</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button mat-menu-item [matMenuTriggerFor]="thresholdSlider" [matMenuTriggerData]="{name: 'threshold'}">
+                <mat-icon class="iconSize">blur_circular</mat-icon>
+                <span>Threshold</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button mat-menu-item (click)="zoomToLayerExtent(layer)">
+                <mat-icon class="iconSize">zoom_in</mat-icon>
+                <span>Zoom to</span>
+              </button>
+              <mat-divider></mat-divider>
+            </mat-menu>
+            <mat-menu #opacitySlider="matMenu" direction="down" yPosition="below">
+              <ng-template matMenuContent let-name="name">
+                <mat-slider max="1" min="0" step="0.01" color="primary" thumbLabel="true"
+                  [(ngModel)]="layer.opacity" style="width: -webkit-fill-available;"
+                  (click)="$event.stopPropagation();" (change)="onHeatMapPropertiesChange($event, name, layer)">
+                </mat-slider>
+              </ng-template>
+            </mat-menu>
+            <mat-menu #intensitySlider="matMenu" direction="down" yPosition="below">
+              <ng-template matMenuContent let-name="name">
+                <mat-slider max="100" min="1" step="1" color="primary" thumbLabel="true"
+                  [(ngModel)]="layer.intensity" style="width: -webkit-fill-available;"
+                  (click)="$event.stopPropagation();" (change)="onHeatMapPropertiesChange($event, name, layer)">
+                </mat-slider>
+              </ng-template>
+            </mat-menu>
+            <mat-menu #radiusSlider="matMenu" direction="down" yPosition="below">
+              <ng-template matMenuContent let-name="name">
+                <mat-slider max="100" min="1" step="1" color="primary" thumbLabel="true"
+                  [(ngModel)]="layer.radius" style="width: -webkit-fill-available;"
+                  (click)="$event.stopPropagation();" (change)="onHeatMapPropertiesChange($event, name, layer)">
+                </mat-slider>
+              </ng-template>
+            </mat-menu>
+            <mat-menu #thresholdSlider="matMenu" direction="down" yPosition="below">
+              <ng-template matMenuContent let-name="name">
+                <mat-slider max="1" min="0" step="0.01" color="primary" thumbLabel="true"
+                  [(ngModel)]="layer.threshold" style="width: -webkit-fill-available;"
+                  (click)="$event.stopPropagation();" (change)="onHeatMapPropertiesChange($event, name, layer)">
+                </mat-slider>
+              </ng-template>
+            </mat-menu>
+          </mat-list-item>
+        </mat-list> -->
+      </div><br>
+      <div class="example-box">
+        <input type="checkbox" [checked]="news_feed2" (change)="newsFeed2($event)" />
+        <label style="text-align: left;margin-left: 5px;">Current Safety Incidents</label><br>
+        <div *ngIf="news_feed2" style="overflow-x:auto;">
+          <table class="table table-striped table-bordered table-hover table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Vehicle ID</th>
+                <th scope="col">Vehicle Type</th>
+                <th scope="col">Location</th>
+                <th scope="col">Incident Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-info">
+                <td>B001A5</td>
+                <td>Bulldozer</td>
+                <td>Farson</td>
+                <td>Critical</td>
+              </tr>
+              <tr class="table-info">
+                <td>L005B3</td>
+                <td>Loader</td>
+                <td>Wellington</td>
+                <td>Minor</td>
+              </tr>
+              <tr class="table-info">
+                <td>L023G6</td>
+                <td>Loader</td>
+                <td>Richfield</td>
+                <td>Major</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><br>
+  
+      <div class="example-box">
+        <input type="checkbox" [checked]="news_feed3" (change)="newsFeed3($event)" />
+        <label style="text-align: left;margin-left: 5px;">Weather Impact</label><br>
+        <div *ngIf="news_feed3">
+          <p>Cloudy at 18 degrees celcius</p>
+          <p>Light Rainfall expected in the northern parts of the state</p>
+        </div>
+      </div><br>
+
+      <div class="example-box">
+        <input type="checkbox" [checked]="news_feed4" (change)="newsFeed4($event)" />
+        <label style="text-align: left;margin-left: 5px;">Future Maintenance Actions</label><br>
+          <div *ngIf="news_feed4">
+            <!-- <ul>
+              <li>Replace Engine for Excavator</li>
+              <li>Replace Exhaust Systems for Bulldozer</li>
+              <li>Replace Spare Part B for Wheel Tractor Scraper</li>
+              <li>Replace Wheels for Loader</li>
+              <li>Replace Spare Part A for Grader</li>
+            </ul> -->
+            <table class="table table-striped table-bordered table-hover table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Vehicle ID</th>
+                  <th scope="col">Vehicle Type</th>
+                  <th scope="col">Maintenance Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-info">
+                  <td>L023G6</td>
+                  <td>Loader</td>
+                  <td>Replace Spare Part A</td>
+                </tr>
+                <tr class="table-info">
+                  <td>L005B3</td>
+                  <td>Loader</td>
+                  <td>Replace Engine</td>
+                </tr>
+                <tr class="table-info">
+                  <td>B001A5</td>
+                  <td>Loader</td>
+                  <td>Replace Wheels</td>
+                </tr>
+                <tr class="table-info">
+                  <td>K981G6</td>
+                  <td>Loader</td>
+                  <td>Replace Exhaust Systems</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
